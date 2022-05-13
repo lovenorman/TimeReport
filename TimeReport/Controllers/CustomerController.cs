@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TimeReport.Data;
 using TimeReport.Data.DB;
 using TimeReport.DTO;
 
@@ -38,24 +39,25 @@ namespace TimeReport.Controllers
             return Ok(_mapper.Map<CustomerDTO>(ad));
         }
 
-        [HttpPut]
-        [Route("{id}")]
-        public IActionResult Update(int id, UpdateAdvertisement advertisement)
+        [HttpPost]
+        public IActionResult Create(CreateCustomer advertisement)
         {
-            var ad = _context.Customers.FirstOrDefault(x => x.Id == id);
+            var ad = _mapper.Map<Customer>(advertisement);
 
-            if (ad == null)
-                return NotFound();
+            //var ad = new Advertisement
+            //{
+            //    Title = advertisement.Title,
+            //    Author = advertisement.Author,
+            //    CreateDate = advertisement.CreateDate,
+            //    Description = advertisement.Description
+            //};
 
-            _mapper.Map<CustomerDTO>(ad);
-
-            //ad.Title = advertisement.Title;
-            //ad.Author = advertisement.Author;
-            //ad.CreateDate = advertisement.CreateDate;
-            //ad.Description = advertisement.Description;
-
+            _context.Customers.Add(ad);
             _context.SaveChanges();
-            return NoContent();
+
+            var adDTO = _mapper.Map<CustomerDTO>(ad);
+
+            return CreatedAtAction(nameof(GetOne), new { id = ad.Id }, adDTO);
         }
     }
 }
