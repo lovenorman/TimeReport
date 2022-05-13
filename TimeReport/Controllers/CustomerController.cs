@@ -44,14 +44,6 @@ namespace TimeReport.Controllers
         {
             var ad = _mapper.Map<Customer>(advertisement);
 
-            //var ad = new Advertisement
-            //{
-            //    Title = advertisement.Title,
-            //    Author = advertisement.Author,
-            //    CreateDate = advertisement.CreateDate,
-            //    Description = advertisement.Description
-            //};
-
             _context.Customers.Add(ad);
             _context.SaveChanges();
 
