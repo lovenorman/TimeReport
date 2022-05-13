@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TimeReport.Data;
 using TimeReport.Data.DB;
 using TimeReport.DTO;
+using TimeReport.DTO.CustomerDTO;
 
 namespace TimeReport.Controllers
 {
@@ -24,7 +25,7 @@ namespace TimeReport.Controllers
         [HttpGet]//Deafult
         public IActionResult Index()//GetAll
         {
-            return Ok(_context.Customers.Include(p => p.Projects).Select(c => _mapper.Map<CustomerDTO>(c)));
+            return Ok(_context.Customers.Include(p => p.Projects).Select(c => _mapper.Map<OneCustomerDTO>(c)));
 
         }
 
@@ -32,24 +33,39 @@ namespace TimeReport.Controllers
         [Route("{id}")]
         public IActionResult GetOne(int id)
         {
-            var ad = _context.Customers.FirstOrDefault(x => x.Id == id);
-            if (ad == null)
+            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
+            if (customer == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<CustomerDTO>(ad));
+            return Ok(_mapper.Map<OneCustomerDTO>(customer));
         }
 
         [HttpPost]
         public IActionResult Create(CreateCustomer advertisement)
         {
-            var ad = _mapper.Map<Customer>(advertisement);
+            var customer = _mapper.Map<Customer>(advertisement);
 
-            _context.Customers.Add(ad);
+            _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            var adDTO = _mapper.Map<CustomerDTO>(ad);
+            var customerDTO = _mapper.Map<OneCustomerDTO>(customer);
 
-            return CreatedAtAction(nameof(GetOne), new { id = ad.Id }, adDTO);
+            return CreatedAtAction(nameof(GetOne), new { id = customer.Id }, customerDTO);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update(int id, UpdateCustomer advertisement)
+        {
+            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
+            
+            if (customer == null)
+                return NotFound();
+
+            _mapper.Map<OneCustomerDTO>(customer);
+
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }

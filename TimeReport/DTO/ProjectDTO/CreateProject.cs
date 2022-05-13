@@ -1,4 +1,6 @@
-﻿namespace TimeReport.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TimeReport.DTO
 {
     public class CreateProject
     {

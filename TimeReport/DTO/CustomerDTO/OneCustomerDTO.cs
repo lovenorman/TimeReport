@@ -1,6 +1,6 @@
 ﻿namespace TimeReport.DTO
 {
-    public class CustomerDTO
+    public class OneCustomerDTO
     {
         public string Name { get; set; }
     }
