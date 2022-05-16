@@ -1,6 +1,6 @@
-﻿namespace TimeReport.DTO.TimeReportDTO
+﻿namespace TimeReport.DTO.TimeRegistrationsDTO
 {
-    public class AllTimeReportsDTO
+    public class UpdateTimeRegistrationDTO
     {
         public DateTime Date { get; set; }
         public int Minutes { get; set; }

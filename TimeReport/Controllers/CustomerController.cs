@@ -41,9 +41,9 @@ namespace TimeReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateCustomerDTO advertisement)
+        public IActionResult Create(CreateCustomerDTO createdCustomer)
         {
-            var customer = _mapper.Map<Customer>(advertisement);
+            var customer = _mapper.Map<Customer>(createdCustomer);
 
             _context.Customers.Add(customer);
             _context.SaveChanges();
@@ -55,7 +55,7 @@ namespace TimeReport.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(int id, UpdateCustomerDTO advertisement)
+        public IActionResult Update(int id, UpdateCustomerDTO updatedCustomer)
         {
             var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
             

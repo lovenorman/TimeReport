@@ -13,6 +13,6 @@ namespace TimeReport.Data.DB
 
         public DbSet<Project> Projects { get; set; }
 
-        public DbSet<TimeReport> TimeReports { get; set; }
+        public DbSet<TimeRegister> TimeRegistrations { get; set; }
     }
 }
