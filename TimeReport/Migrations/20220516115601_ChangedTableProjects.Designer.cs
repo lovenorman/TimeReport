@@ -12,8 +12,8 @@ using TimeReport.Data.DB;
 namespace TimeReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220512130650_CustomerProjectsTimeTB")]
-    partial class CustomerProjectsTimeTB
+    [Migration("20220516115601_ChangedTableProjects")]
+    partial class ChangedTableProjects
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,7 +82,12 @@ namespace TimeReport.Migrations
                     b.Property<int>("Minutes")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("TimeReports");
                 });
@@ -94,9 +99,21 @@ namespace TimeReport.Migrations
                         .HasForeignKey("CustomerId");
                 });
 
+            modelBuilder.Entity("TimeReport.Data.TimeReport", b =>
+                {
+                    b.HasOne("TimeReport.Data.Project", null)
+                        .WithMany("TimeReports")
+                        .HasForeignKey("ProjectId");
+                });
+
             modelBuilder.Entity("TimeReport.Data.Customer", b =>
                 {
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("TimeReport.Data.Project", b =>
+                {
+                    b.Navigation("TimeReports");
                 });
 #pragma warning restore 612, 618
         }

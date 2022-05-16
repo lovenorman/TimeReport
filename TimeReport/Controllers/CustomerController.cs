@@ -25,7 +25,7 @@ namespace TimeReport.Controllers
         [HttpGet]//Deafult
         public IActionResult Index()//GetAll
         {
-            return Ok(_context.Customers.Include(p => p.Projects).Select(c => _mapper.Map<OneCustomerDTO>(c)));
+            return Ok(_context.Customers./*Include(p => p.Projects).ThenInclude(p => p.TimeReports).*/Select(c => _mapper.Map<OneCustomerDTO>(c)));
 
         }
 
@@ -41,7 +41,7 @@ namespace TimeReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateCustomer advertisement)
+        public IActionResult Create(CreateCustomerDTO advertisement)
         {
             var customer = _mapper.Map<Customer>(advertisement);
 
@@ -55,7 +55,7 @@ namespace TimeReport.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(int id, UpdateCustomer advertisement)
+        public IActionResult Update(int id, UpdateCustomerDTO advertisement)
         {
             var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
             

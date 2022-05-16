@@ -8,7 +8,9 @@ namespace TimeReport.Profiles
     {
         public ProjectProfile()
         {
-            CreateMap<AllProjectsDTO, Project>();
+            CreateMap<AllProjectsDTO, Project>().ReverseMap();
+
+            CreateMap<OneProjectDTO, Project>().ReverseMap();
         }
     }
 }

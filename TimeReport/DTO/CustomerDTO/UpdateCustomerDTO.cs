@@ -2,7 +2,7 @@
 
 namespace TimeReport.DTO.CustomerDTO
 {
-    public class UpdateCustomer
+    public class UpdateCustomerDTO
     {
         [MaxLength(20)]
         public string Name { get; set; }

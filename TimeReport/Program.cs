@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddTransient<DataInitializer>();
 builder.Services.AddAutoMapper(typeof(TimeReportProfile));
+builder.Services.AddAutoMapper(typeof(CustomerProfile));
+builder.Services.AddAutoMapper(typeof(ProjectProfile));
 
 var app = builder.Build();
 

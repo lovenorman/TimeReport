@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TimeReport.Migrations
 {
-    public partial class CustomerProjectsTimeTB : Migration
+    public partial class ChangedTableProjects : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,21 +20,6 @@ namespace TimeReport.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TimeReports",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Minutes = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TimeReports", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,19 +41,45 @@ namespace TimeReport.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TimeReports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Minutes = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TimeReports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TimeReports_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_CustomerId",
                 table: "Projects",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TimeReports_ProjectId",
+                table: "TimeReports",
+                column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "TimeReports");
 
             migrationBuilder.DropTable(
-                name: "TimeReports");
+                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "Customers");

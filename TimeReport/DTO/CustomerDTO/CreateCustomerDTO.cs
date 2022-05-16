@@ -3,7 +3,7 @@ using TimeReport.Data;
 
 namespace TimeReport.DTO
 {
-    public class CreateCustomer
+    public class CreateCustomerDTO
     {
         [MaxLength(20)]
         public string Name { get; set; }

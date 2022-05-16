@@ -1,11 +1,9 @@
-﻿namespace TimeReport.Data
+﻿namespace TimeReport.DTO.TimeReportDTO
 {
-    public class TimeReport
+    public class AllTimeReportsDTO
     {
-        public int Id { get; set; }
         public DateTime Date { get; set; }
         public int Minutes { get; set; }
         public string Description { get; set; }
-        
     }
 }
