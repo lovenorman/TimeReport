@@ -3,5 +3,8 @@
     public class OneProjectDTO
     {
         public string Title { get; set; }
+
+        public int CustomerId { get; set; }
+        
     }
 }

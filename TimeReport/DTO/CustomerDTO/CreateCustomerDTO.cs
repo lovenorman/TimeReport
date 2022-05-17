@@ -5,7 +5,10 @@ namespace TimeReport.DTO
 {
     public class CreateCustomerDTO
     {
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string Name { get; set; }
+
+        [MaxLength(30)]
+        public string Address { get; set; }
     }
 }

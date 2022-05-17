@@ -43,29 +43,39 @@ namespace TimeReport.Controllers
         [HttpPost]
         public IActionResult Create(CreateCustomerDTO createdCustomer)
         {
-            var customer = _mapper.Map<Customer>(createdCustomer);
+            if(ModelState.IsValid)
+                {
+                var customer = _mapper.Map<Customer>(createdCustomer);
 
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
+                _context.Customers.Add(customer);
+                _context.SaveChanges();
 
-            var customerDTO = _mapper.Map<OneCustomerDTO>(customer);
+                var customerDTO = _mapper.Map<OneCustomerDTO>(customer);
 
-            return CreatedAtAction(nameof(GetOne), new { id = customer.Id }, customerDTO);
+                return CreatedAtAction(nameof(GetOne), new { id = customer.Id }, customerDTO);
+            }
+
+            return NotFound("Wrong input");
+            
         }
 
         [HttpPut]
         [Route("{id}")]
         public IActionResult Update(int id, UpdateCustomerDTO updatedCustomer)
         {
-            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
-            
-            if (customer == null)
-                return NotFound();
+            if(ModelState.IsValid)
+            {
+                var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
 
-            _mapper.Map<OneCustomerDTO>(customer);
+                if (customer == null)
+                    return NotFound();
 
-            _context.SaveChanges();
-            return NoContent();
+                _mapper.Map<UpdateCustomerDTO>(customer);
+
+                _context.SaveChanges();
+                return Ok(updatedCustomer);
+            }
+            return NotFound("Wrong input");
         }
     }
 }

@@ -9,6 +9,9 @@ namespace TimeReport.Data
         [MaxLength(30)]
         public string Title { get; set; }
 
+        [MaxLength(80)]
+        public string Description { get; set; }
+
         public List<TimeRegister> TimeRegistrations { get; set; }
 
         

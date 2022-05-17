@@ -8,6 +8,8 @@ namespace TimeReport.Data
         
         public string Name { set; get; }
 
+        public string Address { set; get; }
+
         public List<Project> Projects { get; set; }
     }
 }
