@@ -10,6 +10,6 @@ namespace TimeReport.Data
 
         public string Address { set; get; }
 
-        public List<Project>? Projects { get; set; }
+        public List<Project>? Projects { get; set; } = new List<Project>();
     }
 }

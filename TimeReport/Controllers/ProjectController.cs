@@ -45,8 +45,9 @@ namespace TimeReport.Controllers
         {
             if (ModelState.IsValid)
             {
+                var cust = _context.Customers.First(c => c.Id == createdProject.CustomerId);
                 var project = _mapper.Map<Project>(createdProject);
-                //project. = _context.Customers.First(c => c.Id == createdProject.CustomerId);
+                /
 
                 _context.Projects.Add(project);
                 _context.SaveChanges();
