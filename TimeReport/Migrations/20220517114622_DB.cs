@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TimeReport.Migrations
 {
-    public partial class ChangedTableProjects : Migration
+    public partial class DB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,8 @@ namespace TimeReport.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +30,8 @@ namespace TimeReport.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,11 +40,12 @@ namespace TimeReport.Migrations
                         name: "FK_Projects_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TimeReports",
+                name: "TimeRegistrations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -54,9 +57,9 @@ namespace TimeReport.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TimeReports", x => x.Id);
+                    table.PrimaryKey("PK_TimeRegistrations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TimeReports_Projects_ProjectId",
+                        name: "FK_TimeRegistrations_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id");
@@ -68,15 +71,15 @@ namespace TimeReport.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TimeReports_ProjectId",
-                table: "TimeReports",
+                name: "IX_TimeRegistrations_ProjectId",
+                table: "TimeRegistrations",
                 column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TimeReports");
+                name: "TimeRegistrations");
 
             migrationBuilder.DropTable(
                 name: "Projects");

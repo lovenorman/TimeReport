@@ -42,6 +42,7 @@ namespace TimeReport.Controllers
         public IActionResult Create(CreateTimeRegistrationDTO  createdRegistration)
         {
             var timeRegistration = _mapper.Map<TimeRegister>(createdRegistration);
+            //timeRegistration.
 
             _context.TimeRegistrations.Add(timeRegistration);
             _context.SaveChanges();

@@ -9,11 +9,17 @@ namespace TimeReport.Profiles
     {
         public ProjectProfile()
         {
-            CreateMap<AllProjectsDTO, Project>().ReverseMap();
+            CreateMap<AllProjectsDTO, Project>()
+                .ReverseMap();
 
-            CreateMap<OneProjectDTO, Project>().ReverseMap();
+            CreateMap<OneProjectDTO, Project>()
+                .ReverseMap();
 
-            CreateMap<CreateProject, Project>().ReverseMap();
+            CreateMap<CreateProject, Project>()
+                .ReverseMap();
+
+            CreateMap<UpdateProjectDTO, Project>()
+                .ReverseMap();
         }
     }
 }

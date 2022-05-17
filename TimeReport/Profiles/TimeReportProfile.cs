@@ -9,13 +9,17 @@ namespace TimeReport.Profiles
     {
         public TimeReportProfile()
         {
-            CreateMap<AllTimeRegistrationsDTO, TimeRegister>().ReverseMap();
+            CreateMap<AllTimeRegistrationsDTO, TimeRegister>()
+                .ReverseMap();
 
-            CreateMap<OneTimeRegistrationDTO, TimeRegister>().ReverseMap();
+            CreateMap<OneTimeRegistrationDTO, TimeRegister>()
+                .ReverseMap();
 
-            CreateMap<CreateTimeRegistrationDTO, TimeRegister>().ReverseMap();
+            CreateMap<CreateTimeRegistrationDTO, TimeRegister>()
+                .ReverseMap();
 
-            CreateMap<UpdateTimeRegistrationDTO, TimeRegister>().ReverseMap();
+            CreateMap<UpdateTimeRegistrationDTO, TimeRegister>()
+                .ReverseMap();
         }
 
     }

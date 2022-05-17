@@ -22,10 +22,10 @@ namespace TimeReport.Controllers
 
         }
 
-        [HttpGet]//Deafult
+        [HttpGet]
         public IActionResult Index()//GetAll
         {
-            return Ok(_context.Customers./*Include(p => p.Projects).ThenInclude(p => p.TimeReports).*/Select(c => _mapper.Map<OneCustomerDTO>(c)));
+            return Ok(_context.Customers.Select(c => _mapper.Map<OneCustomerDTO>(c)));
 
         }
 
@@ -33,7 +33,7 @@ namespace TimeReport.Controllers
         [Route("{id}")]
         public IActionResult GetOne(int id)
         {
-            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
+            var customer = _context.Customers.Include(p => p.Projects).FirstOrDefault(x => x.Id == id);
             if (customer == null)
                 return NotFound();
 
@@ -54,9 +54,7 @@ namespace TimeReport.Controllers
 
                 return CreatedAtAction(nameof(GetOne), new { id = customer.Id }, customerDTO);
             }
-
             return NotFound("Wrong input");
-            
         }
 
         [HttpPut]

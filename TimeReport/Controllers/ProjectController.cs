@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TimeReport.Data;
 using TimeReport.Data.DB;
+using TimeReport.DTO;
 using TimeReport.DTO.ProjectDTO;
 
 namespace TimeReport.Controllers
@@ -30,11 +33,48 @@ namespace TimeReport.Controllers
         [Route("{id}")]
         public IActionResult GetOne(int id)
         {
-            var customer = _context.Projects.FirstOrDefault(x => x.Id == id);
+            var customer = _context.Projects.Include(t => t.TimeRegistrations).FirstOrDefault(x => x.Id == id);
             if (customer == null)
                 return NotFound();
 
             return Ok(_mapper.Map<OneProjectDTO>(customer));
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateProject createdProject)
+        {
+            if (ModelState.IsValid)
+            {
+                var project = _mapper.Map<Project>(createdProject);
+                //project. = _context.Customers.First(c => c.Id == createdProject.CustomerId);
+
+                _context.Projects.Add(project);
+                _context.SaveChanges();
+
+                var projectDTO = _mapper.Map<OneProjectDTO>(project);
+
+                return CreatedAtAction(nameof(GetOne), new { id = project.Id }, projectDTO);
+            }
+            return NotFound("Wrong input");
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update(int id, UpdateProjectDTO updatedProject)
+        {
+            if (ModelState.IsValid)
+            {
+                var project = _context.Customers.FirstOrDefault(x => x.Id == id);
+
+                if (project == null)
+                    return NotFound();
+
+                _mapper.Map<UpdateProjectDTO>(project);
+
+                _context.SaveChanges();
+                return Ok(updatedProject);
+            }
+            return NotFound("Wrong input");
         }
     }
 }
