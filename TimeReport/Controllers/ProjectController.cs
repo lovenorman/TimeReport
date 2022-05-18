@@ -33,11 +33,11 @@ namespace TimeReport.Controllers
         [Route("{id}")]
         public IActionResult GetOne(int id)
         {
-            var customer = _context.Projects.Include(t => t.TimeRegistrations).FirstOrDefault(x => x.Id == id);
-            if (customer == null)
+            var project = _context.Projects.Include(t => t.TimeRegistrations).FirstOrDefault(x => x.Id == id);
+            if (project == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<OneProjectDTO>(customer));
+            return Ok(_mapper.Map<OneProjectDTO>(project));
         }
 
         [HttpPost]
@@ -47,7 +47,7 @@ namespace TimeReport.Controllers
             {
                 var cust = _context.Customers.First(c => c.Id == createdProject.CustomerId);
                 var project = _mapper.Map<Project>(createdProject);
-                /
+                
 
                 _context.Projects.Add(project);
                 _context.SaveChanges();

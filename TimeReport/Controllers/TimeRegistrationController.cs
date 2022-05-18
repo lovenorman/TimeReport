@@ -41,15 +41,20 @@ namespace TimeReport.Controllers
         [HttpPost]
         public IActionResult Create(CreateTimeRegistrationDTO  createdRegistration)
         {
-            var timeRegistration = _mapper.Map<TimeRegister>(createdRegistration);
-            //timeRegistration.
+            if(ModelState.IsValid)
+            {
+                //Hämtar Projekt vars ID är lika med det vi får in från APIt
+                var project = _context.Projects.First(p => p.Id == createdRegistration.ProjectId);
+                var timeRegistration = _mapper.Map<TimeRegister>(createdRegistration);
 
-            _context.TimeRegistrations.Add(timeRegistration);
-            _context.SaveChanges();
+                _context.TimeRegistrations.Add(timeRegistration);
+                _context.SaveChanges();
 
-            var timeRegistrationDTO = _mapper.Map<CreateTimeRegistrationDTO>(timeRegistration);
+                var timeRegistrationDTO = _mapper.Map<CreateTimeRegistrationDTO>(timeRegistration);
 
-            return CreatedAtAction(nameof(GetOne), new { id = timeRegistration.Id }, timeRegistrationDTO);
+                return CreatedAtAction(nameof(GetOne), new { id = timeRegistration.Id }, timeRegistrationDTO);
+            }
+            return NotFound("Wrong input");
         }
 
         [HttpPut]

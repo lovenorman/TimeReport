@@ -20,9 +20,12 @@ namespace TimeReport.Data.DB
 
         private void SeedProjects()
         {
+            //Hämta customer som heter Telia
             var cust = _context.Customers.First(c => c.Name == "Telia");
+            //Om inget Proejct heter WebApp...
             if (!_context.Projects.Any(a => a.Title == "WebApp"))
             {
+                //Adda nytt project till Projectslistan i den customern vi hämtade
                 cust.Projects.Add(new Project
                 {
                     Title = "WebbApp",
