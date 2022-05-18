@@ -25,7 +25,7 @@ namespace TimeReport.Controllers
         [HttpGet]
         public IActionResult Index()//GetAll
         {
-            return Ok(_context.Customers.Select(c => _mapper.Map<OneCustomerDTO>(c)));
+            return Ok(_context.Customers.Select(c => _mapper.Map<AllCustomersDTO>(c)));
 
         }
 
