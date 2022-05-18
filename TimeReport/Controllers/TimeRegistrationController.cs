@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TimeReport.Data;
 using TimeReport.Data.DB;
 using TimeReport.DTO;
@@ -23,17 +24,21 @@ namespace TimeReport.Controllers
         [HttpGet]//Deafult
         public IActionResult Index()//GetAll
         {
-            return Ok(_context.TimeRegistrations.Select(c => _mapper.Map<AllTimeRegistrationsDTO>(c)));
-
+            return Ok(_context.TimeRegistrations
+                .Include(p => p.Project)
+                .Select(_mapper.Map<TimeRegister, AllTimeRegistrationsDTO>)
+                .ToList());
         }
 
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetOne(int id)
         {
-            var timeRegistration = _context.TimeRegistrations.FirstOrDefault(x => x.Id == id);
+            var timeRegistration = _context.TimeRegistrations.Include(p => p.Project).FirstOrDefault(x => x.Id == id);
             if (timeRegistration == null)
+            {
                 return NotFound();
+            }   
 
             return Ok(_mapper.Map<OneTimeRegistrationDTO>(timeRegistration));
         }
