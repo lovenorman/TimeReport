@@ -9,16 +9,16 @@ namespace TimeReport.Profiles
     {
         public CustomerProfile()
         {
-            CreateMap<AllCustomersDTO, Customer>()
+            CreateMap<Customer, AllCustomersDTO>()
                 .ReverseMap();
 
-            CreateMap<OneCustomerDTO, Customer>()
+            CreateMap<Customer, OneCustomerDTO>()
                .ReverseMap();
 
-            CreateMap<CreateCustomerDTO, Customer>()
+            CreateMap<Customer, CreateCustomerDTO>()
                .ReverseMap();
 
-            CreateMap<UpdateCustomerDTO, Customer>()
+            CreateMap<Customer, UpdateCustomerDTO>()
                .ReverseMap();
 
 

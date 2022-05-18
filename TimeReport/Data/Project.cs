@@ -12,6 +12,8 @@ namespace TimeReport.Data
         [MaxLength(80)]
         public string Description { get; set; }
 
+        public Customer Customer { get; set; }
+
         public List<TimeRegister> TimeRegistrations { get; set; } = new List<TimeRegister>();
 
         

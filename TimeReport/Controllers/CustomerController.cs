@@ -70,7 +70,7 @@ namespace TimeReport.Controllers
                     return NotFound();
                 }
 
-                _mapper.Map<UpdateCustomerDTO>(customer);
+                _mapper.Map(updatedCustomer, customer);
 
                 _context.SaveChanges();
                 return Ok(updatedCustomer);

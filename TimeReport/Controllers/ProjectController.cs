@@ -25,7 +25,9 @@ namespace TimeReport.Controllers
         [HttpGet]//Deafult
         public IActionResult Index()//GetAll
         {
-            return Ok(_context.Projects.Select(c => _mapper.Map<AllProjectsDTO>(c)));
+            return Ok(_context.Projects.Include(c => c.Customer)
+                .Select(_mapper.Map<Project, AllProjectsDTO>)
+                .ToList());
 
         }
 
@@ -33,9 +35,11 @@ namespace TimeReport.Controllers
         [Route("{id}")]
         public IActionResult GetOne(int id)
         {
-            var project = _context.Projects.Include(t => t.TimeRegistrations).FirstOrDefault(x => x.Id == id);
+            var project = _context.Projects.Include(c => c.Customer).FirstOrDefault(x => x.Id == id);
             if (project == null)
+            {
                 return NotFound();
+            }  
 
             return Ok(_mapper.Map<OneProjectDTO>(project));
         }
@@ -45,11 +49,15 @@ namespace TimeReport.Controllers
         {
             if (ModelState.IsValid)
             {
-                var cust = _context.Customers.First(c => c.Id == createdProject.CustomerId);
                 var project = _mapper.Map<Project>(createdProject);
-                
+                var cust = _context.Customers.Find(createdProject.CustomerId);
 
-                _context.Projects.Add(project);
+                if (cust == null)
+                {
+                    return NotFound();
+                }
+
+                cust.Projects.Add(project);
                 _context.SaveChanges();
 
                 var projectDTO = _mapper.Map<OneProjectDTO>(project);
@@ -68,9 +76,11 @@ namespace TimeReport.Controllers
                 var project = _context.Projects.FirstOrDefault(x => x.Id == id);
 
                 if (project == null)
+                {
                     return NotFound();
+                } 
 
-                _mapper.Map<UpdateProjectDTO>(project);
+                _mapper.Map(updatedProject, project);
 
                 _context.SaveChanges();
                 return Ok(updatedProject);

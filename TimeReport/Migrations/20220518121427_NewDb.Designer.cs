@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeReport.Data.DB;
 
@@ -11,9 +12,10 @@ using TimeReport.Data.DB;
 namespace TimeReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220518121427_NewDb")]
+    partial class NewDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace TimeReport.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -89,7 +91,7 @@ namespace TimeReport.Migrations
                     b.Property<int>("Minutes")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -101,24 +103,16 @@ namespace TimeReport.Migrations
 
             modelBuilder.Entity("TimeReport.Data.Project", b =>
                 {
-                    b.HasOne("TimeReport.Data.Customer", "Customer")
+                    b.HasOne("TimeReport.Data.Customer", null)
                         .WithMany("Projects")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
+                        .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("TimeReport.Data.TimeRegister", b =>
                 {
-                    b.HasOne("TimeReport.Data.Project", "Project")
+                    b.HasOne("TimeReport.Data.Project", null)
                         .WithMany("TimeRegistrations")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("TimeReport.Data.Customer", b =>

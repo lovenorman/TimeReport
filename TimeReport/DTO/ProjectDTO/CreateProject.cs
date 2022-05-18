@@ -10,7 +10,7 @@ namespace TimeReport.DTO
         [MaxLength(80)]
         public string Description { get; set; }
         
-        [Required]
+        //[Required]
         public int CustomerId { get; set; }
     }
 }

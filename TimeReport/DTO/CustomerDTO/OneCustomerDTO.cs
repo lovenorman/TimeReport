@@ -8,6 +8,7 @@ namespace TimeReport.DTO
 
         public string Address { get; set; }
 
-        public List<OneProjectDTO> Projects { get; set; } = new List<OneProjectDTO>();  
+        public List<OneProjectDTO> Projects { get; set; } = new List<OneProjectDTO>();
+         
     }
 }

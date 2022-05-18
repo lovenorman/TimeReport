@@ -43,11 +43,15 @@ namespace TimeReport.Controllers
         {
             if(ModelState.IsValid)
             {
-                //Hämtar Projekt vars ID är lika med det vi får in från APIt
-                var project = _context.Projects.First(p => p.Id == createdRegistration.ProjectId);
                 var timeRegistration = _mapper.Map<TimeRegister>(createdRegistration);
+                var project = _context.Projects.Find(createdRegistration.ProjectId);
 
-                _context.TimeRegistrations.Add(timeRegistration);
+                if (project == null)
+                {
+                    return NotFound();
+                }
+
+                project.TimeRegistrations.Add(timeRegistration);
                 _context.SaveChanges();
 
                 var timeRegistrationDTO = _mapper.Map<CreateTimeRegistrationDTO>(timeRegistration);
@@ -66,9 +70,11 @@ namespace TimeReport.Controllers
                 var timeRegistration = _context.TimeRegistrations.FirstOrDefault(x => x.Id == id);
 
                 if (timeRegistration == null)
+                {
                     return NotFound();
+                }
 
-                _mapper.Map<UpdateTimeRegistrationDTO>(timeRegistration);
+                _mapper.Map(updatedTimeRegistration, timeRegistration);
 
                 _context.SaveChanges();
                 return Ok(updatedTimeRegistration);

@@ -12,8 +12,8 @@ using TimeReport.Data.DB;
 namespace TimeReport.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220517114622_DB")]
-    partial class DB
+    [Migration("20220518122205_NewProps")]
+    partial class NewProps
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,7 +91,7 @@ namespace TimeReport.Migrations
                     b.Property<int>("Minutes")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjectId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -114,9 +114,13 @@ namespace TimeReport.Migrations
 
             modelBuilder.Entity("TimeReport.Data.TimeRegister", b =>
                 {
-                    b.HasOne("TimeReport.Data.Project", null)
+                    b.HasOne("TimeReport.Data.Project", "Project")
                         .WithMany("TimeRegistrations")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("TimeReport.Data.Customer", b =>

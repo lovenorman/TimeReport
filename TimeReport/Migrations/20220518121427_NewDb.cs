@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TimeReport.Migrations
 {
-    public partial class DB : Migration
+    public partial class NewDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace TimeReport.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                    CustomerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,8 +40,7 @@ namespace TimeReport.Migrations
                         name: "FK_Projects_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

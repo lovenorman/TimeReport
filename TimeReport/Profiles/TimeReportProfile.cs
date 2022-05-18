@@ -9,16 +9,16 @@ namespace TimeReport.Profiles
     {
         public TimeReportProfile()
         {
-            CreateMap<AllTimeRegistrationsDTO, TimeRegister>()
+            CreateMap<TimeRegister, AllTimeRegistrationsDTO>().ForMember(p => p.ProjectId, act => act.MapFrom(src => src.Project.Id))
                 .ReverseMap();
 
-            CreateMap<OneTimeRegistrationDTO, TimeRegister>()
+            CreateMap<TimeRegister, OneTimeRegistrationDTO>().ForMember(p => p.ProjectId, act => act.MapFrom(src => src.Project.Id))
                 .ReverseMap();
 
-            CreateMap<CreateTimeRegistrationDTO, TimeRegister>()
+            CreateMap<TimeRegister, CreateTimeRegistrationDTO>().ForMember(p => p.ProjectId, act => act.MapFrom(src => src.Project.Id))
                 .ReverseMap();
 
-            CreateMap<UpdateTimeRegistrationDTO, TimeRegister>()
+            CreateMap<TimeRegister, UpdateTimeRegistrationDTO>()
                 .ReverseMap();
         }
 
