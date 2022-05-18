@@ -59,17 +59,21 @@ namespace TimeReport.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(int id)
+        public IActionResult Update(int id, UpdateTimeRegistrationDTO updatedTimeRegistration)
         {
-            var timeRegistration = _context.TimeRegistrations.FirstOrDefault(x => x.Id == id);
+            if(ModelState.IsValid)
+            {
+                var timeRegistration = _context.TimeRegistrations.FirstOrDefault(x => x.Id == id);
 
-            if (timeRegistration == null)
-                return NotFound();
+                if (timeRegistration == null)
+                    return NotFound();
 
-            _mapper.Map<UpdateTimeRegistrationDTO>(timeRegistration);
+                _mapper.Map<UpdateTimeRegistrationDTO>(timeRegistration);
 
-            _context.SaveChanges();
-            return NoContent();
+                _context.SaveChanges();
+                return Ok(updatedTimeRegistration);
+            }
+            return NotFound("Wrong input");
         }
     }
 }

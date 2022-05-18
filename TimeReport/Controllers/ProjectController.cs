@@ -65,7 +65,7 @@ namespace TimeReport.Controllers
         {
             if (ModelState.IsValid)
             {
-                var project = _context.Customers.FirstOrDefault(x => x.Id == id);
+                var project = _context.Projects.FirstOrDefault(x => x.Id == id);
 
                 if (project == null)
                     return NotFound();

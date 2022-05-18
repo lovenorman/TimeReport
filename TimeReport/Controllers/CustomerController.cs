@@ -66,7 +66,9 @@ namespace TimeReport.Controllers
                 var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
 
                 if (customer == null)
+                {
                     return NotFound();
+                }
 
                 _mapper.Map<UpdateCustomerDTO>(customer);
 
