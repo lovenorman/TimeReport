@@ -30,6 +30,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+    //.WithOrigins("https://localhost:44351/%22)); // Allow only this origin can also have multiple origins seperated with comma
+    .SetIsOriginAllowed(origin => true));// Allow any origin
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

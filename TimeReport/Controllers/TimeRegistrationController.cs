@@ -49,17 +49,13 @@ namespace TimeReport.Controllers
             if(ModelState.IsValid)
             {
                 var timeRegistration = _mapper.Map<TimeRegister>(createdRegistration);
-                var project = _context.Projects.Find(createdRegistration.ProjectId);
+                timeRegistration.Project = _context.Projects.First(p => p.Id == createdRegistration.ProjectId);
 
-                if (project == null)
-                {
-                    return NotFound();
-                }
-
-                project.TimeRegistrations.Add(timeRegistration);
+                
+                _context.TimeRegistrations.Add(timeRegistration);
                 _context.SaveChanges();
 
-                var timeRegistrationDTO = _mapper.Map<CreateTimeRegistrationDTO>(timeRegistration);
+                var timeRegistrationDTO = _mapper.Map<OneTimeRegistrationDTO>(timeRegistration);
 
                 return CreatedAtAction(nameof(GetOne), new { id = timeRegistration.Id }, timeRegistrationDTO);
             }

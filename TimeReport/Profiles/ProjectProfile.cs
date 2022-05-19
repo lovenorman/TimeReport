@@ -9,13 +9,13 @@ namespace TimeReport.Profiles
     {
         public ProjectProfile()
         {
-            CreateMap<Project, AllProjectsDTO>().ForMember(c => c.CustomerId, act => act.MapFrom(src => src.Customer.Id))
+            CreateMap<Project, AllProjectsDTO>()/*.ForMember(c => c.CustomerId, act => act.MapFrom(src => src.Customer.Id))*/
                 .ReverseMap();
 
-            CreateMap<Project, OneProjectDTO>().ForMember(c => c.CustomerId, act => act.MapFrom(src => src.Customer.Id))
+            CreateMap<Project, OneProjectDTO>()
                 .ReverseMap();
 
-            CreateMap<Project, CreateProject>().ForMember(c => c.CustomerId, act => act.MapFrom(src => src.Customer.Id))
+            CreateMap<Project, CreateProject>().ForMember(src => src.CustomerId, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<Project, UpdateProjectDTO>()

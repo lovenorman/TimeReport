@@ -35,7 +35,7 @@ namespace TimeReport.Controllers
         [Route("{id}")]
         public IActionResult GetOne(int id)
         {
-            var project = _context.Projects.Include(c => c.Customer).FirstOrDefault(x => x.Id == id);
+            var project = _context.Projects.Include(c => c.TimeRegistrations).FirstOrDefault(p => p.Id == id);
             if (project == null)
             {
                 return NotFound();
@@ -50,14 +50,9 @@ namespace TimeReport.Controllers
             if (ModelState.IsValid)
             {
                 var project = _mapper.Map<Project>(createdProject);
-                var cust = _context.Customers.Find(createdProject.CustomerId);
+                project.Customer = _context.Customers.First(cust => cust.Id == createdProject.CustomerId);
 
-                if (cust == null)
-                {
-                    return NotFound();
-                }
-
-                cust.Projects.Add(project);
+                _context.Projects.Add(project);
                 _context.SaveChanges();
 
                 var projectDTO = _mapper.Map<OneProjectDTO>(project);
