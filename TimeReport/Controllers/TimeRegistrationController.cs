@@ -49,6 +49,7 @@ namespace TimeReport.Controllers
             if(ModelState.IsValid)
             {
                 var timeRegistration = _mapper.Map<TimeRegister>(createdRegistration);
+
                 timeRegistration.Project = _context.Projects.First(p => p.Id == createdRegistration.ProjectId);
 
                 
