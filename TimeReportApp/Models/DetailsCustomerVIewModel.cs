@@ -2,7 +2,7 @@
 
 namespace TimeReportApp.Models
 {
-    public class DetailsCustomerVIewModel
+    public class DetailsCustomerViewModel
     {
         public int Id { get; set; }
 

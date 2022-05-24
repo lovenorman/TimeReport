@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text;
 using TimeReportApp.Models;
 
 namespace TimeReportApp.Controllers
@@ -46,12 +47,62 @@ namespace TimeReportApp.Controllers
             {
                 string data = response.Content.ReadAsStringAsync().Result;
 
-                var customer = JsonConvert.DeserializeObject<DetailsCustomerVIewModel>(data);
+                var customer = JsonConvert.DeserializeObject<DetailsCustomerViewModel>(data);
 
                 return View(customer);
             }
 
             return NotFound();
         }
+
+        public IActionResult NewCustomer()
+        {
+            var model = new 
+        }
+
+        //public IActionResult EditCustomer(int id)
+        //{
+        //    //Var den ska hämta ifrån
+        //    HttpResponseMessage response = client.GetAsync(client.BaseAddress + $"api/customer/{id}").Result;
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        //Datan hämtas som Json
+        //        string data = response.Content.ReadAsStringAsync().Result;
+                
+        //        //Deserializar till en "EitCustomerViewModel"
+        //        var customer = JsonConvert.DeserializeObject<EditCustomerViewModel>(data);
+
+        //        var model = new EditCustomerViewModel(customer);
+
+        //        Name = model.Name;
+        //        Address= model.Address;
+
+        //        return View(model);
+        //    }
+        //    return NotFound();
+        //}
+
+        //[HttpPost]
+        //public async IActionResult Edit(EditCustomerViewModel editCustomerViewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var newCustomer = new EditCustomerViewModel();
+        //        newCustomer.Name = editCustomerViewModel.Name;
+        //        newCustomer.Address = editCustomerViewModel.Address;
+
+        //        var json = JsonConvert.SerializeObject(newCustomer);
+        //        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        //        await client.PostAsync(baseAddress, data);
+
+        //        return RedirectToPage("Customer");
+        //    }
+
+        //    return View();
+
+
+        //}
     }
 }
