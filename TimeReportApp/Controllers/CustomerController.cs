@@ -119,8 +119,6 @@ namespace TimeReportApp.Controllers
             }
 
             return View();
-
-
         }
     }
 }
