@@ -18,9 +18,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +30,7 @@
                 @Html.DisplayFor(modelItem => customer.Name)
             </td>
             <td>
-                <a asp-controller="CustomerDetails" asp-action="Details" asp-route-id="@customer.Id">Details</a>
+                <a asp-controller="Customer" asp-action="GetCustomerById" asp-route-id="@customer.Id">Details</a>
                 
                 @Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
