@@ -37,12 +37,12 @@ namespace TimeReportApp.Controllers
             return NotFound();
         }
 
-        [Route("{id}")]
-        public IActionResult GetOneCustomer(int id)
+        
+        public IActionResult GetCustomerById(int id)
         {
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "api/customer/" + {id}).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + $"api/customer/{id}").Result;
 
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
 

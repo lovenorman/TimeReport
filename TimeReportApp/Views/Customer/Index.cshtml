@@ -21,7 +21,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -34,9 +33,8 @@
                 @Html.DisplayFor(modelItem => customer.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => customer.Address)
-            </td>
-            <td>
+                <a asp-controller="CustomerDetails" asp-action="Details" asp-route-id="@customer.Id">Details</a>
+                
                 @Html.ActionLink("Edit", "Edit", new { id = customer.Id }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
