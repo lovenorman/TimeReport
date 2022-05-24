@@ -16,8 +16,8 @@ namespace TimeReportApp.Controllers
             client = new HttpClient();
             client.BaseAddress = baseAddress;
         }
-        
-        public IActionResult Index()//GET
+
+            public IActionResult Index()//GET
         {
             List<CustomerViewModel> customerList = new List<CustomerViewModel>();
 
@@ -55,54 +55,72 @@ namespace TimeReportApp.Controllers
             return NotFound();
         }
 
+
         public IActionResult NewCustomer()
         {
-            var model = new 
+            var model = new NewCustomerViewModel();
+            return View(model);
         }
 
-        //public IActionResult EditCustomer(int id)
-        //{
-        //    //Var den ska hämta ifrån
-        //    HttpResponseMessage response = client.GetAsync(client.BaseAddress + $"api/customer/{id}").Result;
+        [HttpPost]
+        public async Task<IActionResult> NewCustomer(NewCustomerViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var customer = new
+                {
+                    Name = model.Name,
+                    Address = model.Address
+                };
+     
+                var json = JsonConvert.SerializeObject(customer);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        //Datan hämtas som Json
-        //        string data = response.Content.ReadAsStringAsync().Result;
-                
-        //        //Deserializar till en "EitCustomerViewModel"
-        //        var customer = JsonConvert.DeserializeObject<EditCustomerViewModel>(data);
+                await client.PostAsync(baseAddress + "api/customer", data);
 
-        //        var model = new EditCustomerViewModel(customer);
+                return RedirectToAction("Index");
+            }
+            return NotFound();
+        }
+        
+        public IActionResult EditCustomer(int id)
+        {
+            //Var den ska hämta ifrån
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + $"api/customer/{id}").Result;
 
-        //        Name = model.Name;
-        //        Address= model.Address;
+            if (response.IsSuccessStatusCode)
+            {
+                //Datan hämtas som Json
+                string data = response.Content.ReadAsStringAsync().Result;
 
-        //        return View(model);
-        //    }
-        //    return NotFound();
-        //}
+                //Deserializar till en "EitCustomerViewModel"
+                var model = JsonConvert.DeserializeObject<EditCustomerViewModel>(data);
 
-        //[HttpPost]
-        //public async IActionResult Edit(EditCustomerViewModel editCustomerViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var newCustomer = new EditCustomerViewModel();
-        //        newCustomer.Name = editCustomerViewModel.Name;
-        //        newCustomer.Address = editCustomerViewModel.Address;
+                return View(model);
+            }
+            return NotFound();
+        }
 
-        //        var json = JsonConvert.SerializeObject(newCustomer);
-        //        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        [HttpPost]
+        public async Task<IActionResult> EditCustomer(int id, EditCustomerViewModel editCustomerViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var newCustomer = new EditCustomerViewModel();
+                newCustomer.Name = editCustomerViewModel.Name;
+                newCustomer.Address = editCustomerViewModel.Address;
 
-        //        await client.PostAsync(baseAddress, data);
+                var json = JsonConvert.SerializeObject(newCustomer);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-        //        return RedirectToPage("Customer");
-        //    }
+                await client.PostAsync(baseAddress + $"api/customer/{id}", data);
 
-        //    return View();
+                return RedirectToAction("Index");
+            }
+
+            return View();
 
 
-        //}
+        }
     }
 }
