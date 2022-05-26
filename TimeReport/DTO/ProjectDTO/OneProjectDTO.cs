@@ -10,6 +10,6 @@ namespace TimeReport.DTO.ProjectDTO
 
         public string Description { get; set; }
 
-        
+        public int CustomerId { get; set; }
     }
 }
