@@ -1,4 +1,4 @@
-TimeReport
+#TimeReport
 _________________________________
 
 REST-API that handles an simplified data model with customers, projects and time registrations.
@@ -18,7 +18,7 @@ Project:
 TimeRegister:
 - You can create, reade and update
 
-TimeReportApp
+#TimeReportApp
 _________________________________
 
 ASP.NET Core Webb App that administrates (creates, reads and updates) the customers and their projects.
