@@ -1,6 +1,6 @@
 # TimeReport
 
-REST-API that handles an simplified data model with customers, projects and time registrations.
+REST-API that handles a simplified data model with customers, projects and time registrations.
 
 - SQL Server
 - Code first
