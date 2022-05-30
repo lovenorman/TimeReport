@@ -19,4 +19,4 @@ TimeRegister:
 
 # TimeReportApp
 
-ASP.NET Core Webb App that administrates (creates, reads and updates) the customers and their projects.
+ASP.NET Core Webb App that administrates (creates, reads and updates) the customers and their projects. Not finished yet.
